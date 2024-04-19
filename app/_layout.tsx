@@ -1,58 +1,30 @@
-import FontAwesome from '@expo/vector-icons/FontAwesome';
-import { DarkTheme, DefaultTheme, ThemeProvider } from '@react-navigation/native';
-import { useFonts } from 'expo-font';
-import { Stack } from 'expo-router';
-import * as SplashScreen from 'expo-splash-screen';
-import { useEffect } from 'react';
+import { View, Text } from 'react-native'
+import React from 'react'
+import { Stack } from 'expo-router'
 
-import { useColorScheme } from '@/components/useColorScheme';
-
-export {
-  // Catch any errors thrown by the Layout component.
-  ErrorBoundary,
-} from 'expo-router';
-
-export const unstable_settings = {
-  // Ensure that reloading on `/modal` keeps a back button present.
-  initialRouteName: '(tabs)',
-};
-
-// Prevent the splash screen from auto-hiding before asset loading is complete.
-SplashScreen.preventAutoHideAsync();
-
-export default function RootLayout() {
-  const [loaded, error] = useFonts({
-    SpaceMono: require('../assets/fonts/SpaceMono-Regular.ttf'),
-    ...FontAwesome.font,
-  });
-
-  // Expo Router uses Error Boundaries to catch errors in the navigation tree.
-  useEffect(() => {
-    if (error) throw error;
-  }, [error]);
-
-  useEffect(() => {
-    if (loaded) {
-      SplashScreen.hideAsync();
-    }
-  }, [loaded]);
-
-  if (!loaded) {
-    return null;
-  }
-
-  return <RootLayoutNav />;
-}
-
-function RootLayoutNav() {
-  const colorScheme = useColorScheme();
-
+const RootLayout = () => {
   return (
-    <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
-      <Stack>
-        <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-        <Stack.Screen name="modal" options={{ presentation: 'modal' }} />
-      </Stack>
-    </ThemeProvider>
-  );
+    <Stack screenOptions={{
+        // headerStyle: {
+        //     backgroundColor: "black"
+        // },
+        // headerTintColor: "white"
+    }}>
+        <Stack.Screen name='index' options={{ headerShown: false }} />
+        <Stack.Screen name='welcome' options={{ headerShown: false }} />
+        <Stack.Screen name='transaction' options={{ headerShown: false }} />
+        <Stack.Screen name='payment' options={{ headerShown: false }} />
+        <Stack.Screen name='budgeting' options={{ headerShown: false }} />
+        <Stack.Screen name='card' options={{ headerShown: false }} />
+        <Stack.Screen name='test' options={{ headerShown: false }} />
+        <Stack.Screen name='profile' options={{ headerShown: false }} />
+        <Stack.Screen name='location' options={{ headerShown: false }} />
+        <Stack.Screen name='feeds' options={{ headerShown: false }} />
+        <Stack.Screen name='register/index' options={{ title: "Register", headerTitleAlign: "center" }} />
+        <Stack.Screen name='(tabs)' options={{ headerShown: false }} />
+        <Stack.Screen name='[missing]' options={{ title: "Page Not Found", headerTitleAlign: "center" }} />
+    </Stack>
+  )
 }
+
+export default RootLayout
